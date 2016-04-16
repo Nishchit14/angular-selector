@@ -426,6 +426,15 @@
 				scope.$watch('value', function (newValue, oldValue) {
 					if (angular.equals(newValue, oldValue)) return;
 					if (!scope.remote || scope.options.length > 0) scope.updateSelected();
+					if (scope.remote && (!scope.options || scope.options.length == 0)) {
+
+						if((angular.isString(scope.value) && scope.value.length)
+                            || Object.keys(scope.value).length){
+
+							scope.options = [newValue];
+							scope.updateSelected();
+						}
+					}
 					scope.filterOptions();
 					scope.updateValue();
 				}, true);
